@@ -7,6 +7,7 @@ import {
 import { VerifyOtpResponse } from '../handlers/dto/login.dto';
 import { JwtUtil } from '../utils/jwtUtil';
 import { UserTokenPayload } from '../domain/user';
+import { AuthenticationError } from '../../../../noony/noony-core/build';
 
 @Service()
 export class LoginService {
@@ -39,6 +40,9 @@ export class LoginService {
 
   async verifyOtp(verifyOtp: VerifyOtpRequest): Promise<VerifyOtpResponse> {
     console.log(`LoginService.verifyOtp: ${JSON.stringify(verifyOtp)}`);
+    if (verifyOtp.verification !== 'Kj#9mP$2n') {
+      throw new AuthenticationError(`OTP isn't matching`);
+    }
     const payload: UserTokenPayload = {
       expiration: new Date('2023-12-31T23:59:59Z'),
       id: 'mockId123',
