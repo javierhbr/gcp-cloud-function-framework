@@ -36,7 +36,7 @@ export class EnvLoader {
     }
 
     // Fall back to environment variables if no .env file is found
-    if (!process.env.GUEST_API_KEY || !process.env.LOGIN_API_KEY) {
+    if (!process.env.GUEST_API_KEY || !process.env.MEMBER_API_KEY) {
       console.warn('No .env file found, using process.env values');
     }
 
@@ -50,13 +50,13 @@ EnvLoader.getInstance().loadEnv();
 export const config = {
   apiKeys: {
     GUEST: process.env.GUEST_API_KEY || '',
-    LOGIN: process.env.LOGIN_API_KEY || '',
+    LOGIN: process.env.MEMBER_API_KEY || '',
   },
 };
 
 // Validate required environment variables
 const validateConfig = () => {
-  const requiredVars = ['GUEST_API_KEY', 'LOGIN_API_KEY'];
+  const requiredVars = ['GUEST_API_KEY', 'MEMBER_API_KEY'];
   const missingVars = requiredVars.filter((varName) => !process.env[varName]);
 
   if (missingVars.length > 0) {
@@ -70,7 +70,7 @@ const validateConfig = () => {
       );
       // Set default development values
       process.env.GUEST_API_KEY = process.env.GUEST_API_KEY || 'dev-guest-key';
-      process.env.LOGIN_API_KEY = process.env.LOGIN_API_KEY || 'dev-login-key';
+      process.env.MEMBER_API_KEY = process.env.MEMBER_API_KEY || 'dev-login-key';
     }
   }
 };

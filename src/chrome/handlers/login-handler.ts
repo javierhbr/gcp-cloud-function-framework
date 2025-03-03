@@ -15,7 +15,6 @@ import {
   SentOtpRequest,
   SentOtpRequestSchema,
   VerifyOtpRequest,
-  VerifyOtpRequestSchema,
   VerifyOtpRequestType,
   VerifyOtpResponse,
 } from './dto/login.dto';
@@ -31,7 +30,7 @@ import { BaseResponseType } from './dto/generic.dto';
 const loginHandler = new Handler<LoginRequestType, LoginResponseType>()
   .use(dependencyInjection())
   .use(bodyValidator(LoginRequestSchema))
-  .use(basicAuthMiddleware)
+  .use(apiKeyMiddleware(API_KEYS_TYPE.LOGIN))
   .use(bodyParser())
   .use(errorHandler())
   .use(responseWrapperMiddleware())
@@ -49,7 +48,7 @@ const loginHandler = new Handler<LoginRequestType, LoginResponseType>()
 
 const verifyOtpHandler = new Handler<VerifyOtpRequestType, VerifyOtpResponse>()
   .use(dependencyInjection())
-  .use(bodyValidator(VerifyOtpRequestSchema))
+  .use(apiKeyMiddleware(API_KEYS_TYPE.GUEST))
   .use(basicAuthMiddleware)
   .use(bodyParser())
   .use(errorHandler())
