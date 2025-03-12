@@ -21,7 +21,6 @@ import {
 import {
   API_KEYS_TYPE,
   apiKeyMiddleware,
-  basicAuthMiddleware,
 } from '../middleware/auth-custom.middleware';
 import { Container } from 'typedi';
 import { LoginApi } from './api/loginApi';
@@ -49,7 +48,6 @@ const loginHandler = new Handler<LoginRequestType, LoginResponseType>()
 const verifyOtpHandler = new Handler<VerifyOtpRequestType, VerifyOtpResponse>()
   .use(dependencyInjection())
   .use(apiKeyMiddleware(API_KEYS_TYPE.GUEST))
-  .use(basicAuthMiddleware)
   .use(bodyParser())
   .use(errorHandler())
   .use(responseWrapperMiddleware())

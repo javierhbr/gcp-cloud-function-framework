@@ -5,9 +5,10 @@ import {
   errorHandler,
   responseWrapperMiddleware,
 } from '@noony/core';
-import { bearerAuthMiddleware } from '../middleware/auth-custom.middleware';
+import { API_KEYS_TYPE, apiKeyMiddleware, bearerAuthMiddleware } from '../middleware/auth-custom.middleware';
 
 const guestHistoryMessageHandler = Handler.use(dependencyInjection())
+  .use(apiKeyMiddleware(API_KEYS_TYPE.GUEST))
   .use(bearerAuthMiddleware)
   // .use(bodyValidator(chatRequestSchema))
   .use(errorHandler())
@@ -19,6 +20,7 @@ const guestHistoryMessageHandler = Handler.use(dependencyInjection())
   });
 
 const guestMessageHandler = Handler.use(dependencyInjection())
+  .use(apiKeyMiddleware(API_KEYS_TYPE.GUEST))
   .use(bearerAuthMiddleware)
   // .use(bodyValidator(chatRequestSchema))
   .use(errorHandler())
